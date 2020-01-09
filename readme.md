@@ -40,16 +40,20 @@ where e.id = '1'
 Also, there are two other tables: 'users' and 'employees_logs'. Users table that stores all app users inside and log keeps each action by each user for each employee. If you would like to list a log of actions for each employee or list all action by specific user you can run these queries. First query lists all log related to employee number #1:
 
 ```sql
-SELECT l.*, e.employee_name 
+SELECT l.*, e.employee_name ,u.fullname
 from employees_logs l
-left join employees e on e.id = l.employee_id 
-where e.employee_id = '1'
+    left join employees e on e.id = l.employee_id
+    left join users u on u.id = l.user_id  
+where l.employee_id = '1'
+order by l.the_time desc
 ```
 
 Following query lists all action were done by user #1:
 ```sql
-SELECT l.*, e.employee_name 
+SELECT l.*, e.employee_name ,u.fullname
 from employees_logs l
-left join employees e on e.id = l.employee_id 
+    left join employees e on e.id = l.employee_id 
+    left join users u on u.id = l.user_id 
 where l.user_id = '1'
+order by l.the_time desc
 ```
